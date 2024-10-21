@@ -17,7 +17,6 @@ export const signUp = async (req: Request, res: Response) => {
     const user = await createUser(email, password, firstname, lastname, role);
     res.send(user);
   } catch (error: any) {
-    console.log(error);
     if (error.code === "P2002" && error.meta.target.includes("email")) {
       res.status(400).send("Email already exists");
       return;
