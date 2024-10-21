@@ -1,7 +1,9 @@
 import express, { Request, Response } from "express";
 import { ValidateEmail } from "../utils/utils";
+import { comparePassword, hashPassword, generateToken } from "../services/user";
 
-import { createUser } from "../models/user";
+import { createUser, getUser } from "../models/user";
+import { User } from "@prisma/client";
 
 export const signUp = async (req: Request, res: Response) => {
   const { email, password, firstname, lastname, role } = req.body;
@@ -13,8 +15,15 @@ export const signUp = async (req: Request, res: Response) => {
     res.status(400).send("Invalid email");
     return;
   }
+  const hashedPassword = await hashPassword(password);
   try {
-    const user = await createUser(email, password, firstname, lastname, role);
+    const user = await createUser(
+      email,
+      hashedPassword,
+      firstname,
+      lastname,
+      role
+    );
     res.send(user);
   } catch (error: any) {
     if (error.code === "P2002" && error.meta.target.includes("email")) {
@@ -25,5 +34,31 @@ export const signUp = async (req: Request, res: Response) => {
       return;
     }
   }
-  res.send({ email, password });
+};
+
+export const signIn = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    res.status(400).send("Email and password are required");
+    return;
+  }
+  let user: User;
+  user = await getUser(email);
+  if (!user) {
+    res.status(404).send("User not found");
+    return;
+  }
+  if (!(await comparePassword(password, user.password))) {
+    res.status(401).send("Invalid password");
+    return;
+  }
+  const token = generateToken(user.id);
+  res.header("Authorization", token);
+  res.send({
+    firstname: user.firstname,
+    lastname: user.lastname,
+    email: user.email,
+    role: user.role,
+  });
+  return;
 };
