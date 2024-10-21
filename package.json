@@ -1,11 +1,12 @@
 {
-  "main": "index.ts",
+  "main": "src/index.ts",
   "scripts": {
     "test": "cross-env NODE_ENV=test jest --testTimeout=5000 --detectOpenHandles",
-    "lint": "eslint . --ignore-pattern node_modules/",
+    "lint": "eslint .",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md}\" --ignore-path .prettierignore",
-    "dev": "nodemon --exec ts-node index.ts",
-    "db:dev:push": "dotenv -e .env.development npx prisma db push"
+    "dev": "nodemon --exec ts-node src/index.ts",
+    "db:dev:push": "dotenv -e .env.development npx prisma db push",
+    "build": "npx tsc"
   },
   "jest": {"testEnvironment": "node"},
   "nodemonConfig": {

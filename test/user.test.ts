@@ -1,7 +1,7 @@
-import app from '../app';
+import app from '../src/app';
 import dotenv from 'dotenv';
 import request from 'supertest';
-import { describe, expect, test } from '@jest/globals';
+import { describe, expect } from '@jest/globals';
 
 dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
 
