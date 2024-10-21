@@ -1,7 +1,7 @@
 {
   "main": "app.ts",
   "scripts": {
-    "lint": "eslint . --ignore-pattern node_modules/",
+    "lint": "eslint . --ignore-path .prettierignore",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md}\" --ignore-path .prettierignore",
     "dev": "nodemon --exec ts-node app.ts",
     "db:dev:push": "dotenv -e .env.development npx prisma db push"
