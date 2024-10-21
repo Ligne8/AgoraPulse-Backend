@@ -1,6 +1,5 @@
-import { PrismaClient, Role, User } from '@prisma/client';
-
-const prisma: PrismaClient = new PrismaClient();
+import { Role, User } from '@prisma/client';
+import prisma from '../client';
 
 export async function createUser(
   email: string,
