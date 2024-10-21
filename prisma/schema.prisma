@@ -8,16 +8,102 @@ generator client {
 }
 
 model User {
-  id    Int    @id @default(autoincrement())
-  name  String
+  id    String    @id @default(uuid())
   email String  @unique
-  posts Post[]
+  password String
+  firstname String 
+  lastname String 
+  role Role @default(CLIENT)
+  tags Tags_Users[]
+  store Store?
+  user_store Users_Stores[]
+  users_ads users_ads[]
 }
 
-model Post {
-  id      Int    @id @default(autoincrement())
-  title   String
-  content String
-  userId  Int
-  user    User   @relation(fields: [userId], references: [id])
+model Tags_Users {
+  @@id([tagId, userId])
+  userId String
+  tagId String
+  user User @relation(fields: [userId], references: [id])
+  tag Tags @relation(fields: [tagId], references: [id])
 }
+
+model Tags {
+  id    String    @id @default(uuid())
+  name String
+  tags_user Tags_Users[]
+  tags_Store Tags_Stores[]
+}
+
+model Tags_Stores {
+  @@id([tagId, storeId])
+  storeId String
+  tagId String
+  store Store @relation(fields: [storeId], references: [id])
+  tag Tags @relation(fields: [tagId], references: [id])
+}
+
+model Store {
+  id    String    @id @default(uuid())
+  iot_id String @unique
+  linked_at DateTime
+  userId String @unique
+  user User @relation(fields: [userId], references: [id]) 
+  user_store Users_Stores[]
+  pictures Picture[]
+  ads Ads[]
+  achievements Achievement[]
+  tags_store Tags_Stores[]
+}
+
+model Users_Stores {
+  @@id([userId, storeId])
+  userId String
+  storeId String
+  user User @relation(fields: [userId], references: [id])
+  store Store @relation(fields: [storeId], references: [id])
+}
+
+model Picture {
+  id    String    @id @default(uuid())
+  url String
+  storeId String
+  store Store @relation(fields: [storeId], references: [id])
+}
+
+model Ads {
+  id    String    @id @default(uuid())
+  url String
+  picture_url String
+  ad_type String
+  title String
+  description String
+  fidelity_points Int
+  storeId String
+  store Store @relation(fields: [storeId], references: [id])
+  users_ads users_ads[]
+}
+
+model users_ads {
+  @@id([userId, adId])
+  userId String
+  adId String
+  user User @relation(fields: [userId], references: [id])
+  ad Ads @relation(fields: [adId], references: [id])
+}
+
+model Achievement {
+  id    String    @id @default(uuid())
+  treshold Int
+  title String
+  description String
+  storeId String
+  store Store @relation(fields: [storeId], references: [id])
+}
+
+enum Role {
+  CLIENT
+  RETAILER
+  ADMIN
+}
+
