@@ -1,14 +1,14 @@
-import { PrismaClient, Role } from "@prisma/client";
+import { PrismaClient, Role, User } from '@prisma/client';
 
-const prisma = new PrismaClient();
+const prisma: PrismaClient = new PrismaClient();
 
-export const createUser: any = async (
+export async function createUser(
   email: string,
   password: string,
   firstname: string,
   lastname: string,
   role: Role
-) => {
+): Promise<User> {
   return await prisma.user.create({
     data: {
       email,
@@ -18,12 +18,12 @@ export const createUser: any = async (
       role,
     },
   });
-};
+}
 
-export const getUser: any = async (email: string) => {
+export async function getUser(email: string): Promise<User | null> {
   return await prisma.user.findUnique({
     where: {
       email,
     },
   });
-};
+}
