@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
 
 const app: express.Application = express();
-const version = process.env.VERSION || '/api/v1';
+const version: string = process.env.VERSION || '/api/v1';
 
 import healthRouter from './routes/health';
 import userRouter from './routes/user';
