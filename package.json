@@ -6,6 +6,7 @@
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md}\" --ignore-path .prettierignore",
     "dev": "nodemon --exec ts-node src/index.ts",
     "db:dev:push": "dotenv -e .env.development npx prisma db push",
+    "generate:initsql": "dotenv -e .env.development npx prisma migrate dev --create-only",
     "build": "npx tsc"
   },
   "jest": {"testEnvironment": "node"},

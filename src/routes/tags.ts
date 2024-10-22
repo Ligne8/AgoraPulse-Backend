@@ -1,12 +1,11 @@
 import express, { Router } from 'express';
 
-import { signUp, signIn } from '../controllers/user';
 import { addClientTags } from '../controllers/client';
+import { getTags } from '../controllers/tag';
 
 const router: Router = express.Router();
 
-router.post('/signup', signUp);
-router.post('/login', signIn);
-router.post('/tags/:user_id', addClientTags);
+router.post('/client/:client_id', addClientTags);
+router.get('/', getTags);
 
 export default router;

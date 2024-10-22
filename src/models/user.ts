@@ -19,10 +19,18 @@ export async function createUser(
   });
 }
 
-export async function getUser(email: string): Promise<User | null> {
+export async function getUserByEmail(email: string): Promise<User | null> {
   return await prisma.user.findUnique({
     where: {
       email,
+    },
+  });
+}
+
+export async function getUserById(id: string): Promise<User | null> {
+  return await prisma.user.findUnique({
+    where: {
+      id,
     },
   });
 }
