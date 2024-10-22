@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-
+import { createOpenAIRequestService } from '../services/openai';
 
 /**
  * aiInput is all the information needed in order to have a great prompt
@@ -26,10 +26,17 @@ const checkOpenAIRequest = (req: Request): boolean => {
  * @param req
  * @param res
  */
-export function createOpenAIRequest(req: Request, res: Response) {
+export function createOpenAIRequestController(req: Request, res: Response) {
   if(!checkOpenAIRequest(req)) {
     res.status(400).send('Invalid request : ' +
         'announce_type, fields, tags, description, title, store_information are required');
     return;
   }
+  createOpenAIRequestService()
+      .then(() => {
+        res.send('OpenAI request created :\n' + res);
+      })
+      .catch((error: any) => {
+        res.status(500).send('Error creating OpenAI request' + error);
+      });
 }

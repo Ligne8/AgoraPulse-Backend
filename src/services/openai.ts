@@ -1,7 +1,7 @@
 import OpenAI from 'openai';
 import { OpenAiSingleton } from '../singleton/openAiSingleton';
 
-export async function createOpenAIRequest() {
+export async function createOpenAIRequestService() {
     const openai = OpenAiSingleton.getInstance().getOpenAIConfig();
 
     const completion = await openai.chat.completions.create({
@@ -14,5 +14,7 @@ export async function createOpenAIRequest() {
             },
         ],
     });
+    console.log(completion);
+    console.log("---------");
     console.log(completion.choices[0].message);
 }

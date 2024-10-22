@@ -1,8 +1,8 @@
 import express, { Router } from 'express';
-import { createOpenAIRequest } from '../controllers/openai';
+import { createOpenAIRequestController } from '../controllers/openai';
 
 const router: Router = express.Router();
 
-router.post('/', createOpenAIRequest);
+router.post('/', createOpenAIRequestController);
 
 export default router;
