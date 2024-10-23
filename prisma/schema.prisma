@@ -45,8 +45,12 @@ model Tags_Stores {
 
 model Store {
   id    String    @id @default(uuid())
-  iot_id String @unique
-  linked_at DateTime
+  name String
+  description String
+  webUrl String?
+  address String?
+  iot_id String? @unique
+  linked_at DateTime?
   userId String @unique
   user User @relation(fields: [userId], references: [id]) 
   user_store Users_Stores[]

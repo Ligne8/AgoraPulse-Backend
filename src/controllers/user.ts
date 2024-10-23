@@ -18,7 +18,7 @@ export async function signUp(req: Request, res: Response): Promise<void> {
   }
   const hashedPassword: string = await hashPassword(password);
   try {
-    await createUser(email, hashedPassword, firstname, lastname, role);
+    createUser(email, hashedPassword, firstname, lastname, role);
     res.sendStatus(201);
   } catch (error: unknown) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
