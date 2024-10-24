@@ -9,14 +9,16 @@ const version: string = process.env.VERSION || '/api/v1';
 
 import healthRouter from './routes/health';
 import userRouter from './routes/user';
+import TagsRouter from './routes/tags';
 import openaiRouter from './routes/openai';
 
 app.use(cors());
 
 app.use(express.json());
 
-app.use(`${version}/health`, healthRouter);
-app.use(`${version}/user`, userRouter);
+app.use('/health', healthRouter);
+app.use('/user', userRouter);
+app.use('/tags', TagsRouter);
 app.use(`${version}/openai`, openaiRouter);
 
 export default app;
