@@ -9,7 +9,9 @@
     "generate:initsql": "dotenv -e .env.development npx prisma migrate dev --create-only",
     "build": "npx tsc"
   },
-  "jest": {"testEnvironment": "node"},
+  "jest": {
+    "testEnvironment": "node"
+  },
   "nodemonConfig": {
     "env": {
       "NODE_ENV": "development"
@@ -23,6 +25,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "firebase-admin": "^12.6.0",
+    "openai": "^4.68.1",
     "prisma": "^5.21.1"
   },
   "devDependencies": {

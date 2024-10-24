@@ -8,7 +8,7 @@ export async function createUser(
   lastname: string,
   role: Role
 ): Promise<User> {
-  return await prisma.user.create({
+  return prisma.user.create({
     data: {
       email,
       password,
@@ -20,7 +20,7 @@ export async function createUser(
 }
 
 export async function getUserByEmail(email: string): Promise<User | null> {
-  return await prisma.user.findUnique({
+  return prisma.user.findUnique({
     where: {
       email,
     },
